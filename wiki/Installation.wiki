@@ -10,7 +10,7 @@ A handy ZIP archive of the app can be found [http://code.google.com/p/django-val
 svn checkout http://django-values.googlecode.com/svn/trunk/ values
 }}}
 
-== INSTALLED_APPS ==
+= INSTALLED_APPS =
 
 Add it to your `INSTALLED_APPS` setting to make sure Django knows about it.
 
@@ -26,7 +26,7 @@ INSTALLED_APPS = (
 )
 }}}
 
-== URLconf ==
+= URLconf =
 
 In order to modify your values on the fly, you'll need access to the value editor, so add it in to your urls.py.
 
@@ -40,6 +40,6 @@ urlpatterns = patterns('',
 )
 }}}
 
-== That's it! ==
+= That's it! =
 
 The rest of the work is done in each individual models.py, and is covered under [Usage].
