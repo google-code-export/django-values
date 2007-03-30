@@ -52,6 +52,8 @@ class Product(models.Model):
 
 Once values are added to your models, simply start your server and they'll be automatically found and made available to the value editor. Simply point your browser to !http://localhost:8000/admin/values/ (or whatever domain and port your server uses) and edit at your leisure.
 
+*Note:* This will include a screenshot, I just haven't gotten it up here yet.
+
 = Referencing values in Python =
 
 As the above examples demonstrate, Python code can use these values as standard class attributes. Internally, django-values uses descriptors to take these references and return the current value in the proper type, so your code will always get the right value in the right type. This helps keep your model methods clean and concise, by using a notation that already makes perfect sense.
