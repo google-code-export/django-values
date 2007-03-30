@@ -1,0 +1,36 @@
+#summary What it does, why it's useful and who might use it.
+
+= The problem =
+
+Complex sites often need reference values to perform specific calculations. These values are not specific to any particular object instances, though they are often related to certain classes. They may be fairly constant, or they may change over time as policies evolve with the application.
+
+= Typical solutions =
+
+These values are usually either coded directly within the calculation, or maintained in some sort of global variable. Using a global variable is the better of those options, as it offers the flexibility of being able to change the value in one place to effectively update all related calculations.
+
+However, both of those still require a code change, which requires a programmer to be involved, and also requires restarting the application. Depending on the organization behind the application, it may also require review by a code standards group and possibly even a full model office test review prior to deployment.
+
+= A new alternative =
+
+Run-time value configuration offers the ability to store such values in a database, while still having them accessible as if they were stored directly in code. This allows programmers the ability to utilize these values as easily as they always have, while offering administrators the option of changing values without touching any code (and thus, no programmers, restarts or code reviews).
+
+The values application allows programmers to include references to these values without storing the values themselves anywhere in code. An administration view and template is provided, so that, once the applicaton is running, administrators may enter or edit values as necessary, without impacting any code.
+
+This can all be made available with the following statements at the beginning of a model file.
+
+{{{
+from django.db import models
+from django.contrib import values
+}}}
+
+This may all seem fairly abstract at the moment, so perhaps some [Examples] will help.
+
+= Technical details =
+
+All values are stored in a single database table, using the application, model and attribute names as the lookup column. The table is accessed once during startup of the application, the first time a run-time value is encountered in a model. Therefore, if there are no values utilized in any applications in `INSTALLED_APPS`, the table will never be queried.
+
+Once values are retrieved from the table, they are cached for future use, since they are very unlikely to change. All use of value references results in a retrieval of this cached value, rather than hitting the database each time.
+
+In fact, the only time the database is touched after start-up is when values are edited. At that point, the table is updated to reflect the new values and the cached values are also updated to be current. In fact, when simply viewing the edit page, the database table still isn't touched, but instead uses the cached values to ensure it accurately represents what's really being utilized (in case the database table gets updated by another process).
+
+This is all achieved by attaching descriptors to models instead of the value itself. The descriptor handles getting the value out of the cache, as well as converting it to the appropriate Python type.
