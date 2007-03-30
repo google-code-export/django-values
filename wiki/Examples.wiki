@@ -1,10 +1,6 @@
 #summary Simple by design, but illustrate a variety of available possibilities
 
-= Examples =
-
-Here are some basic examples of how django-values might be used.
-
-== Blog ==
+= Blog =
 
 In a very simple (and not very likely) example, a blog application could use run-time value configuration to decide how many comments to allow for a blog entry. The following model could be used to describe this scenario, while allowing the application administrator to change the limit at any time. Only the blog entry model is described here, while a comment model would be included as well.
 
@@ -21,7 +17,7 @@ class BlogEntry(models.Model):
 
 While it's unlikely that a blog application would do so, templates and view code could then use `can_receive_comments` to determine whether to allow users to post comments on a particular entry, based on a value that can be changed at any time.
 
-== Brewery database ==
+= Brewery database =
 
 In a considerably more likely scenario, the application is an on-line database of breweries around the country. In among the variety of information that might be included, one useful bit of information might be the number of people a particular brewery employs. Given the number of microbreweries out there, it might also be interesting to see which ones legally qualify as small businesses. The following model provides what's needed.
 
@@ -39,7 +35,7 @@ class Brewery(models.Model):
 
 The value for `small_business_employees` can be retrieved from the U.S. Small Business Administration, and can be updated any time that organization changes it's mind.
 
-== Human resources ==
+= Human resources =
 
 In more complicated situation, a human resources application needs to keep track of employee wages and make sure everyone is making at least the minimum wage defined by government. The mimimum wage value itself does not change for individual employees, but it does change over time, and so is a perfect candidate for run-time configuration. The following model demonstrates how a value reference could be included in code, while allowing the actual value itself to be edited by an administrator.
 
