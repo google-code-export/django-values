@@ -40,6 +40,12 @@ urlpatterns = patterns('',
 )
 }}}
 
+= Syncing the database =
+
+Since values are backed up to the database for persistence across server instances, there is one model that needs to be installed into the database. Just run `syncdb` and the table will be created as normal.
+
+*Note:* This does _not_ have to be done prior to adding values to your models. If you run `syncdb` _after_ setting up your value attributes, django-values won't complain. However, you will definitely need to run `syncdb` before attempting to edit any values.
+
 = That's it! =
 
 The rest of the work is done in each individual models.py, and is covered under [Usage].
