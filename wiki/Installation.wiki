@@ -1,0 +1,45 @@
+#summary How to include this in your project and use it in your models
+
+*Note:* The app is not yet available for download. This documentation will be accurate once the code is checked in to Google Code.
+
+Hopefully this will someday be incorporated into Django's official distribution, but until then, simply download the package and place it somewhere accessible to Django (this could be in your project or some other location you've added to your `PYTHONPATH`). Once you have it available to Python, there are a few more things to do.
+
+A handy ZIP archive of the app can be found [http://code.google.com/p/django-values/downloads/list here], or for the geeks among you, you can use SVN to get it:
+
+{{{
+svn checkout http://django-values.googlecode.com/svn/trunk/ values
+}}}
+
+== INSTALLED_APPS ==
+
+Add it to your `INSTALLED_APPS` setting to make sure Django knows about it.
+
+{{{
+INSTALLED_APPS = (
+    'django.contrib.auth',
+    'django.contrib.contenttypes',
+    'django.contrib.sessions',
+    'django.contrib.sites',
+    'django.contrib.admin',
+    'myproject.values',
+    ...
+)
+}}}
+
+== URLconf ==
+
+In order to modify your values on the fly, you'll need access to the value editor, so add it in to your urls.py.
+
+*Note:* Since it's an administrative features, I've chosen to use the `/admin/` prefix for this as well, so be sure to add this new line before the main admin url pattern.
+
+{{{
+urlpatterns = patterns('',
+    (r'^admin/values/', include('vgmix3.values.urls')),
+    (r'^admin/', include('django.contrib.admin.urls')),
+    ...
+)
+}}}
+
+== That's it! ==
+
+The rest of the work is done in each individual models.py, and is covered under [Usage].
