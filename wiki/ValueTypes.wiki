@@ -18,7 +18,7 @@ Accepts and validates a length of time, which would be made available to Python 
 
 Accepts and validates an integer that is converted to int when accessed.
 
-*Note:* there is no `SmallIntegerValue`, since `SmallIntegerField` exists primarily to control column size in the database representation of the model. Since all values are stored using a single model, the value is stored as `CharField(maxlength=255)`, a `SmallIntegerValue` would provide no savings whatsoever.
+*Note:* there is no `SmallIntegerValue`, since `SmallIntegerField` exists primarily to control column size in the database representation of the model. Since all values are stored using a single model, the value is stored as `CharField(maxlength=255)`, so a `SmallIntegerValue` would provide no advantage whatsoever.
 
 = PercentValue =
 
@@ -34,6 +34,8 @@ class Product(models.Model):
     def get_sales_tax(self):
         return self.price * Product.sales_tax
 }}}
+
+*Note*: The range of 0 to 100 probably won't work for all use cases, and thus may be lifted later on. It exists right now mostly as a proof of concept to show the different things that can be done to create value types.
 
 = PositiveIntegerValue =
 
