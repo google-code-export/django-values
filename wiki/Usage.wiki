@@ -10,7 +10,7 @@ from myproject import values
 ...
 }}}
 
-*Note*: I use `myproject` here to encourage people to keep unapproved subframeworks out of the main Django source, but ideally this would be approved as a contrib app, and thus this could be changed to `from django.contrib import values`.
+*Note*: I use `myproject` here to discourage people from putting unapproved subframeworks in with the main Django source, but ideally this would be approved as a contrib app, and thus this could be changed to `from django.contrib import values`.
 
 = Adding values to models =
 
