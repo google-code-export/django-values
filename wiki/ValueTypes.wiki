@@ -10,9 +10,9 @@ Displays a checkbox for administrative purposes, while providing `True` or `Fals
 
 = DurationValue =
 
-Accepts and validates a length of time, which would be made available to Python as a `timedelta` object. Particularly useful for timeouts and delays. For instance, a `DurationValue` could determine how long stories are displayed on the front page before being removed, or how long ads should run before requiring additional payment.
+Accepts and validates a length of time, which would be made available to Python as a `timedelta` object. Particularly useful for timeouts and delays. For instance, a `DurationValue` could determine how long stories may be displayed on the front page before being removed, how long ads should run before requiring additional payment, or a maximum length for user-contributed audio or video content.
 
-*Note*: The UI for this is still under consideration. The easiest would be a series of text boxes corresponding to years, months, days, hours, minutes and seconds. Perhaps an additional `resolution` parameter could be passed to the value constructor to limit it somewhat, so that the UI would then only show inputs for that resolution plus one more (for coarse- and fine-grained adjustment). Something like `values.DurationValue(resolution=values.MINUTES)` would show only hours and minutes.
+*Note*: The UI for this is still under consideration. Currently it just uses a simple text field to allow entry of seconds as a decimal (float). The easiest would be a series of text boxes corresponding to weeks, days, hours, minutes, seconds and microseconds, but that would get quite large if all were included. Perhaps an additional `resolution` parameter could be passed to the value constructor to limit it somewhat, so that the UI would then only show inputs for that resolution plus one more (for coarse- and fine-grained adjustment). Something like `values.DurationValue(resolution=values.MINUTES)` would show only hours and minutes.
 
 = IntegerValue =
 
