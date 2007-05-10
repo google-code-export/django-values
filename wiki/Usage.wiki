@@ -62,6 +62,8 @@ class Product(models.Model):
         return (self.profit / self.cost) > Product.options.preferred_markup
 }}}
 
+*Note:* At the moment, module-level options should be instantiated at the top of the module, before any models that use options. Functionally, they can be defined anywhere in the file, but the editor currently doesn't show any kind of heading for them, so they're hard to identify if they're not at the top of the file. This limited is expected to lifted in a future release, but backwards-compatibility will not be impacted.
+
 Options objects may also be added together to apply multiple sets of values to a single model or module. This can be especially useful if other contributed apps supply their own options, as they can be easily combined in a single model. The standard addition operator can be used for this, as follows:
 
 {{{
@@ -77,6 +79,7 @@ class Song(models.Model):
     file = models.FileField(upload_to="/path/to/audio")
 
     options = TimeOptions() + VolumeOptions()
+}}}
 
 = Assigning permissions =
 
