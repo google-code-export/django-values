@@ -5,5 +5,6 @@
  * Per-app value editing
  * Integration with newforms-admin
  * Better editor positioning for module-level options
+ * Better UI for DurationValue
 
 More will be added based on suggestions from django-developers
