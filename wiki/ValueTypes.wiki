@@ -1,6 +1,6 @@
 #summary Descriptions of the types currently available
 
-Because run-time values can only be edited by a super-user, value types only need to differentiate basic data types, rather than validate specific inputs. However, some number-validing types have been included for ease of administration.
+Because run-time values can only be edited by staff members, value types only need to differentiate basic data types, rather than validate specific inputs. However, some number-validing types have been included for ease of administration.
 
 *Note:* I'm open to adding new value types, these are simply the only ones that I've run into a need for so far.
 
