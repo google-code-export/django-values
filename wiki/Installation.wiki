@@ -1,10 +1,7 @@
 #summary How to include this in your project and use it in your models
+#labels Featured,Phase-Deploy
 
-*Note:* The app is not yet available for download. This documentation will be accurate once the code is checked in to Google Code.
-
-Hopefully this will someday be incorporated into Django's official distribution, but until then, simply download the package and place it somewhere accessible to Django (this could be in your project or some other location you've added to your `PYTHONPATH`). Once you have it available to Python, there are a few more things to do.
-
-A handy ZIP archive of the app can be found [http://code.google.com/p/django-values/downloads/list here], or for the geeks among you, you can use SVN to get it:
+Until the app gets included into Django's official distribution, it is only available from SVN:
 
 {{{
 svn checkout http://django-values.googlecode.com/svn/trunk/ values
@@ -21,20 +18,20 @@ INSTALLED_APPS = (
     'django.contrib.sessions',
     'django.contrib.sites',
     'django.contrib.admin',
-    'myproject.values',
+    'django.contrib.values',
     ...
 )
 }}}
 
 = URLconf =
 
-In order to modify your values on the fly, you'll need access to the value editor, so add it in to your urls.py.
+In order to modify your options on the fly, you'll need access to the value editor, so add it in to your urls.py.
 
-*Note:* Since it's an administrative features, I've chosen to use the `/admin/` prefix for this as well, so be sure to add this new line before the main admin url pattern.
+*Note:* Since it's essentially an administrative features, I've chosen to use the `/admin/` prefix for this as well. If you choose to follow this pattern, be sure to add the new line before the main admin url pattern. However, there's no requirement for your project to use this particular URL; you may place it anywhere you'd like.
 
 {{{
 urlpatterns = patterns('',
-    (r'^admin/values/', include('vgmix3.values.urls')),
+    (r'^admin/values/', include('django.contrib.values.urls')),
     (r'^admin/', include('django.contrib.admin.urls')),
     ...
 )
