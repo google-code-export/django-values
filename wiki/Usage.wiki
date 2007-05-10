@@ -62,6 +62,22 @@ class Product(models.Model):
         return (self.profit / self.cost) > Product.options.preferred_markup
 }}}
 
+Options objects may also be added together to apply multiple sets of values to a single model or module. This can be especially useful if other contributed apps supply their own options, as they can be easily combined in a single model. The standard addition operator can be used for this, as follows:
+
+{{{
+class TimeOptions(values.Options):
+    maximum_length = models.DurationValue()
+
+class VolumeOptions(values.Options):
+    auto_normalize = models.BooleanValue("Normalize audio on upload")
+    normalized_volume = models.IntegerValue()
+
+class Song(models.Model):
+    name = models.CharField(maxlength=255)
+    file = models.FileField(upload_to="/path/to/audio")
+
+    options = TimeOptions() + VolumeOptions()
+
 = Assigning permissions =
 
 In order to delegate the task of value editing to different users, every model using a value also receives an additional permission, which controls the available values when a user views the value editor. These additional permissions must be added to the database in order to be utilized, so sipmly run `syncdb` again and these permissions will be added.
@@ -73,6 +89,8 @@ Once added to the database, these are permissions like any other, and can be ass
 = Editing values =
 
 Once values are added to your models, simply start your server and they'll be automatically found and made available to the value editor. Simply point your browser to !http://localhost:8000/admin/values/ (substitute your own domain/port and path) and edit at your leisure.
+
+Values will appear in the editor in the order they were provided to your code. The order of Options instantiation is most important, with the order of value declarations taking effect after that. If multiple Options classes are added together, their values will appear in the editor according to their Options classes from left to right. Try it out, you'll get the hang of it.
 
 *Note*: This will include a screenshot, I just haven't gotten it up here yet. Also, the value editor currently shows all editable values (those with the proper permissions, as mentioned above) on a single page. So far, I expect this would suffice for most use cases, but it could be broken out into a per-app view if necessary. A per-model view would be too granular to be very useful.
 
