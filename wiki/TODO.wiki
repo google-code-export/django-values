@@ -1,7 +1,9 @@
 #summary Features planned for future implementation
 #labels Featured
 
+ * _*New name*_
  * Per-app value editing
  * Integration with newforms-admin
 
 More will be added based on suggestions from django-developers
+
