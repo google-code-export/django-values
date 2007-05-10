@@ -4,6 +4,6 @@
  * _*New name*_
  * Per-app value editing
  * Integration with newforms-admin
+ * Better editor positioning for module-level options
 
 More will be added based on suggestions from django-developers
-
