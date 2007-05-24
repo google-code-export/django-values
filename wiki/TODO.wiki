@@ -5,6 +5,8 @@
  * Per-app value editing
  * Integration with newforms-admin
  * Better editor positioning for module-level options
- * Better UI for !DurationValue
+ * Better UI for !DurationValue (based on !DurationField)
+ * Integration with the [http://www.djangoproject.com/documentation/sites/ sites framework]
 
 More will be added based on suggestions from django-developers
+
