@@ -7,6 +7,6 @@
  * Better editor positioning for module-level options
  * Better UI for !DurationValue (based on !DurationField)
  * Integration with the [http://www.djangoproject.com/documentation/sites/ sites framework]
+ * Proper rst-based Documentation
 
 More will be added based on suggestions from django-developers
-
