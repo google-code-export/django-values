@@ -8,6 +8,6 @@
  * Better UI for !DurationValue ([http://code.djangoproject.com/ticket/2443 pending])
  * Integration with the [http://www.djangoproject.com/documentation/sites/ sites framework] (will be available in the next release)
  * Proper rst-based Documentation (will be available in the next release)
+ * Decoupling from the default admin URL scheme
 
 More may be added based on suggestions from django-developers
-
