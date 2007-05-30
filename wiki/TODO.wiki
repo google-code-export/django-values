@@ -9,5 +9,6 @@
  * Integration with the [http://www.djangoproject.com/documentation/sites/ sites framework] (will be available in the next release)
  * Proper rst-based Documentation (will be available in the next release)
  * Decoupling from the default admin URL scheme
+ * Implement a form of `choices`
 
 More may be added based on suggestions from django-developers
