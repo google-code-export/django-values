@@ -5,6 +5,7 @@
  * Per-app value editing (will be available in the next release)
  * Integration with newforms-admin
  * Better editor positioning for module-level options
+ * Permissinos for module-level options
  * Better UI for !DurationValue ([http://code.djangoproject.com/ticket/2443 pending])
  * Integration with the [http://www.djangoproject.com/documentation/sites/ sites framework] (will be available in the next release)
  * Proper rst-based Documentation (will be available in the next release)
