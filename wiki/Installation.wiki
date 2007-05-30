@@ -13,11 +13,7 @@ Add it to your `INSTALLED_APPS` setting to make sure Django knows about it.
 
 {{{
 INSTALLED_APPS = (
-    'django.contrib.auth',
-    'django.contrib.contenttypes',
-    'django.contrib.sessions',
-    'django.contrib.sites',
-    'django.contrib.admin',
+    ...
     'dbsettings',
     ...
 )
