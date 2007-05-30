@@ -2,14 +2,11 @@
 #labels Featured
 
  * _*New name*_ ([http://groups.google.com/group/django-developers/t/bf4a058ebdd1c15d pending])
- * Per-app value editing (will be available in the next release)
  * Integration with newforms-admin
  * Better editor positioning for module-level options
  * Permissinos for module-level options
  * Better UI for !DurationValue ([http://code.djangoproject.com/ticket/2443 pending])
- * Integration with the [http://www.djangoproject.com/documentation/sites/ sites framework] (will be available in the next release)
- * Proper rst-based Documentation (will be available in the next release)
  * Decoupling from the default admin URL scheme
- * Implement a form of `choices` (will be available in the next release)
+ * Proper unit tests
 
 More may be added based on suggestions from django-developers
