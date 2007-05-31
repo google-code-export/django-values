@@ -14,9 +14,13 @@ Accepts and validates a length of time, which would be made available to Python 
 
 *Note*: The UI for this is will eventually be based on [http://code.djangoproject.com/ticket/2443 DurationField], if and when that gets integrated. Currently it just uses a simple text field to allow entry of seconds as a decimal (float).
 
+= FloatValue =
+
+Accepts and validates a number that is converted to `float` when accessed.
+
 = IntegerValue =
 
-Accepts and validates an integer that is converted to int when accessed.
+Accepts and validates an integer that is converted to `int` when accessed.
 
 *Note:* there is no `SmallIntegerValue`, since `SmallIntegerField` exists primarily to control column size in the database representation of the model. Since all values are stored using a single model, the value is stored as `CharField(maxlength=255)`, so a `SmallIntegerValue` would provide no advantage whatsoever.
 
