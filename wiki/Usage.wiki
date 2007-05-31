@@ -2,23 +2,23 @@
 
 = Importing =
 
-Importing is as simple as any other app, simply add it to the import list at the top of models.py. The trick is to make sure you import the base of the package, not `values.models`. This is to prevent a name clash with `django.db.models` and also to make values a bit more distinct from fields.
+Importing is as simple as any other app, simply add it to the import list at the top of `models.py`. The trick is to make sure you import the base of the package, not `dbsettings.models`. This is to prevent a name clash with `django.db.models` and also to make settings a bit more distinct from fields.
 
 {{{
 from django.db import models
-from django.contrib import values
+import dbsettings
 ...
 }}}
 
-= Adding values to your apps =
+= Adding settings to your apps =
 
-Values are declared to subclasses of a special class, `values.Options`. This class is then instantiated wherever you'd like to use it. This may be done in the main module namespace, or within the namespace of an individual model. In fact, a single Options class may be instantiated in multiple places, even in multiple apps. Each instantiation creates a new set of values at the specified location.
+Settings are declared to subclasses of a special class, `dbsettings.Group`. This class is then instantiated wherever you'd like to use it. This may be done in the main module namespace, or within the namespace of an individual model. In fact, a single `Group` class may be instantiated in multiple places, even in multiple apps. Each instantiation creates a new set of values at the specified location.
 
-The syntax used for individual values is nearly identical to that of fields. Simply declare it using Django's standard declarative syntax, making sure to use `values` instead of `models`.
+The syntax used for individual settings is nearly identical to that of fields. Simply declare it using Django's standard declarative syntax, making sure to use `dbsettings` instead of `models`.
 
 {{{
-class ThreadOptions(values.Options):
-    popularity_threshold = values.PositiveIntegerValue()
+class ThreadOptions(dbsettings.Group):
+    popularity_threshold = dbsettings.PositiveIntegerValue()
 
 class Thread(models.Model):
     title = models.CharField(maxlength=255)
@@ -34,13 +34,13 @@ class Post(models.Model):
     body = models.TextField()
 }}}
 
-You may supply any name you like for the model attribute that will hold your values. The example uses "options," but any name will suffice.
+You may supply any name you like for the model attribute that will hold your settings. The example uses "options," but any name will suffice.
 
-By default, the value description that will be shown in the editor is derived from the attribute name (just like fields). However, also like fields, values may also take a positional argument for a description. This description will be used in the value editor instead of the default, which is based on the attribute name. It's best to start the description with a lower-case letter, as it will be captialized automatically when necessary.
+By default, the value description that will be shown in the editor is derived from the attribute name (just like fields). However, also like fields, settings may also take a positional argument for a description. This description will be used in the editor instead of the default, which is based on the attribute name. It's best to start the description with a lower-case letter, as it will be captialized automatically when necessary.
 
 {{{
-class ProductOptions(values.Options):
-    sale_length = values.DurationValue("how long a sale should last")
+class ProductOptions(dbsettings.Group):
+    sale_length = dbsettings.DurationValue("how long a sale should last")
 options = ProductOptions()
 
 class ProductOptions(values.Options):
@@ -62,17 +62,31 @@ class Product(models.Model):
         return (self.profit / self.cost) > Product.options.preferred_markup
 }}}
 
-*Note:* At the moment, module-level options should be instantiated at the top of the module, before any models that use options. Functionally, they can be defined anywhere in the file, but the editor currently doesn't show any kind of heading for them, so they're hard to identify if they're not at the top of the file. This limited is expected to lifted in a future release, but backwards-compatibility will not be impacted.
-
-Options objects may also be added together to apply multiple sets of values to a single model or module. This can be especially useful if other contributed apps supply their own options, as they can be easily combined in a single model. The standard addition operator can be used for this, as follows:
+Individual settings may also take a list of choices that will be available in the editor, which is particularly useful for apps meant for distribution. The syntax for setting choices is the same as for choices in model fields and the newforms `ChoiceField`.
 
 {{{
-class TimeOptions(values.Options):
-    maximum_length = models.DurationValue()
+verbosity_choices = (
+    (0, 'Silent'),
+    (1, 'Warnings messages only'),
+    (2, 'Warnings and status messages'),
+)
 
-class VolumeOptions(values.Options):
-    auto_normalize = models.BooleanValue("Normalize audio on upload")
-    normalized_volume = models.IntegerValue()
+class LogginOptions(dbsettings.Group):
+    enabled = dbsettings.BooleanValue()
+    verbosity = dbsettings.IntegerValue(choices=verbosity_choices)
+}}}
+
+*Note:* At the moment, module-level options should be instantiated at the top of the module, before any models that use options. Functionally, they can be defined anywhere in the file, but the editor currently doesn't show any kind of heading for them, so they're hard to identify if they're not at the top of the file. This limited is expected to be lifted in a future release, but backwards-compatibility will not be impacted.
+
+`Group` objects may also be added together to apply multiple sets of values to a single model or module. This can be especially useful if other contributed apps supply their own options, as they can be easily combined in a single model. The standard addition operator can be used for this, as follows:
+
+{{{
+class TimeOptions(dbsettings.Group):
+    maximum_length = dbsettings.DurationValue()
+
+class VolumeOptions(dbsettings.Group):
+    auto_normalize = dbsettings.BooleanValue("Normalize audio on upload")
+    normalized_volume = dbsettings.IntegerValue()
 
 class Song(models.Model):
     name = models.CharField(maxlength=255)
@@ -83,22 +97,20 @@ class Song(models.Model):
 
 = Assigning permissions =
 
-In order to delegate the task of value editing to different users, every model using a value also receives an additional permission, which controls the available values when a user views the value editor. These additional permissions must be added to the database in order to be utilized, so sipmly run `syncdb` again and these permissions will be added.
+In order to delegate the task of editing settings to different users, every model using a value also receives an additional permission, which controls the available values when a user views the value editor. These additional permissions must be added to the database in order to be utilized, so sipmly run `syncdb` again and these permissions will be added.
 
-Once added to the database, these are permissions like any other, and can be assigned to users or groups, and superusers automatically have permission to edit all values.
+Once added to the database, these are permissions like any other, and can be assigned to users or groups; superusers automatically have permission to edit all values.
 
 *Note:* For various technical reasons, permissions are only added for model-level options. Module-level options are therefore only editable by superusers.
 
-= Editing values =
+= Editing settings =
 
-Once values are added to your models, simply start your server and they'll be automatically found and made available to the value editor. Simply point your browser to !http://localhost:8000/admin/values/ (substitute your own domain/port and path) and edit at your leisure.
+Once settings are added to your apps, simply start your server and they'll be automatically found and made available to the value editor. Simply point your browser to !http://localhost:8000/settings/ (substitute your own domain/port and path) and edit at your leisure.
 
-Values will appear in the editor in the order they were provided to your code. The order of Options instantiation is most important, with the order of value declarations taking effect after that. If multiple Options classes are added together, their values will appear in the editor according to their Options classes from left to right. Try it out, you'll get the hang of it.
+Settings will appear in the editor in the order they were provided to your code. The order of `Group` instantiation is most important, with the order of setting declarations taking effect after that. If multiple `Group` classes are added together, their settings will appear in the editor according to their `Group` classes from left to right. Try it out, you'll get the hang of it.
 
-*Note*: This will include a screenshot, I just haven't gotten it up here yet. Also, the value editor currently shows all editable values (those with the proper permissions, as mentioned above) on a single page. So far, I expect this would suffice for most use cases, but it could be broken out into a per-app view if necessary. A per-model view would be too granular to be very useful.
+= Referencing settings in Python =
 
-= Referencing values in Python =
+As the above examples demonstrate, Python code can use these settings as standard class attributes. Internally, dbsettings use descriptors to take these references and return the current value in the proper type, so your code will always get the right value in the right type. This helps keep your model methods clean and concise, by using a notation that already makes perfect sense.
 
-As the above examples demonstrate, Python code can use these values as standard class attributes. Internally, django-values uses descriptors to take these references and return the current value in the proper type, so your code will always get the right value in the right type. This helps keep your model methods clean and concise, by using a notation that already makes perfect sense.
-
-*Note:* Attributes defined using django-values are only available on the model itself, _not on any individual instances_. Attempting to access a value attribute on an instance of your model will raise an `AttributeError`, the same exception that would be thrown if you had never designated the attribute. This is to ensure that programmers don't get confused by referencing an attribute on an object when that attribute doesn't relate to that specific object. Basically, it's my way of enforcing some level of "good" programming practice.
+*Note:* Settings groups defined on models are only available on the model itself, _not on any individual instances_. Attempting to access a group on an instance of your model will raise an `AttributeError`. This is to ensure that programmers don't get confused by referencing an attribute on an object when that attribute doesn't relate to that specific object. Basically, it's my way of enforcing some level of "good" programming practice.
