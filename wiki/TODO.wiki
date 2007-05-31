@@ -1,7 +1,6 @@
 #summary Features planned for future implementation
 #labels Featured
 
- * _*New name*_ ([http://groups.google.com/group/django-developers/t/bf4a058ebdd1c15d pending])
  * Integration with newforms-admin
  * Better editor positioning for module-level options
  * Permissinos for module-level options
