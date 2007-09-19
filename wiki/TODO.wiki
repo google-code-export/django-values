@@ -5,7 +5,6 @@
  * Better editor positioning for module-level options
  * Permissinos for module-level options
  * Better UI for !DurationValue ([http://code.djangoproject.com/ticket/2443 pending])
- * Decoupling from the default admin URL scheme
- * Proper unit tests
 
 More may be added based on suggestions from django-developers
+ 
